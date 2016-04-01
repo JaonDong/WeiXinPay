@@ -1,0 +1,10 @@
+﻿@using TestWX.WeiXin.OAuth
+
+@{
+    ViewBag.Title = "Index";
+    var url = ComMethods.GetLoginUrl("http://wx.chinook5.com/home/redirect");
+}
+
+<h2>Index</h2>
+
+<a class="btn btn-danger" href="@url">登录</a>

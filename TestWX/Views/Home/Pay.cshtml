@@ -1,0 +1,28 @@
+﻿@using WxPayAPI
+@{
+    ViewBag.Title = "Pay";
+    var wx = ((string)ViewBag.wxJsApiParam);
+    
+}
+@section scripts
+{
+    <script type="text/javascript">
+        //调用微信JS api 支付
+        function jsApiCall() {
+            WeixinJSBridge.invoke(
+                    'getBrandWCPayRequest',
+                    @Html.Raw(wx), //josn串
+                function(res) {
+                    WeixinJSBridge.log(res.err_msg);
+                    alert(res.err_code + res.err_desc + res.err_msg);
+                }
+
+        }
+
+
+    </script>
+}
+<h2>Pay</h2>
+
+@Model
+<button class="btn btn-danger" onclick="jsApiCall()">立即支付</button>

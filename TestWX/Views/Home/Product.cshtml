@@ -1,0 +1,15 @@
+﻿@model TestWX.WeiXin.OAuth.Models.WXUser
+@{
+    ViewBag.Title = "Product";
+}
+
+<h2>Product</h2>
+
+<ul>
+    <li><img src="@Model.headimgurl" style="height: 30px; width: 30px;"/></li>
+    <li>@Model.nickname</li>
+    <li>@Model.openid</li>
+    <li>@Model.sex</li>
+</ul>
+
+<a class="btn btn-danger" href="@Url.Action("Pay",new {openId=Model.openid, total=1})">支付0.01</a>
