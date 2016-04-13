@@ -24,16 +24,17 @@ namespace TestWX.Controllers
 
         public ActionResult Redirect(string code = "", string state = "")
         {
-
             if (code == "")
             {
                 return View();
             }
             var token = ComMethods.GetToken(code);
             var user = ComMethods.GetUserInfo(token);
+
+            var openId = user.openid;
+
             Session["user"] = user;
             log = "code:" + code + "|token:" + token.access_token + "|user:" + user.nickname;
-
 
             return RedirectToAction("Product");
         }
@@ -60,7 +61,6 @@ namespace TestWX.Controllers
             if (string.IsNullOrEmpty(openId) || string.IsNullOrEmpty(total))
             {
                 Log.Error(this.GetType().ToString(), "This page have not get params, cannot be inited, exit...");
-                Response.Write("<span style='color:#FF0000;font-size:20px'>" + "页面传参出错,请返回重试" + "</span>");
             }
             else
             {
@@ -76,9 +76,6 @@ namespace TestWX.Controllers
                     Log.Info("jsapi", "unifiedOrderResult下面");
                     wxJsApiParam = jsApiPay.GetJsApiParameters();//获取H5调起JS API参数                    
                     Log.Debug(this.GetType().ToString(), "wxJsApiParam : " + wxJsApiParam);
-                    //在页面上显示订单信息
-                    Response.Write("<span style='color:#00CD00;font-size:20px'>订单详情：</span><br/>");
-                    Response.Write("<span style='color:#00CD00;font-size:20px'>" + unifiedOrderResult.ToPrintStr() + "</span>");
                     ViewBag.jsApiPay = jsApiPay;
                 }
                 catch (Exception ex)
